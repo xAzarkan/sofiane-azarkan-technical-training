@@ -4,9 +4,9 @@ from odoo.exceptions import ValidationError
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
-    def confirm(self):
+    def action_confirm(self):
         # Call the super method to confirm the sale order
-        super(SaleOrder, self).confirm()
+        res = super(SaleOrder, self).action_confirm()
 
         # Iterate over the sale order lines
         for line in self.order_line:
@@ -20,3 +20,5 @@ class SaleOrder(models.Model):
                     'allday': True,
                     'partner_ids': [(6, 0, [self.partner_id.id])],
                 })
+
+        return res
