@@ -15,11 +15,11 @@ class SaleOrder(models.Model):
             if line.training_date:
                 # Create a new event in the calendar for the selected employee
                 self.env['calendar.event'].create({
-                    'name': 'Training',
+                    'name': 'Training for sale order',
                     'start_date': line.training_date,
                     'stop_date': line.training_date + timedelta(hours=8),
                     'allday': True,
-                    'partner_ids': [([line.employee_id.id])], #changer cela pour récuperer l'employé selectionné
+                    'attendee_ids': [(4, [line.employee_id.id])], #changer cela pour récuperer l'employé selectionné
                 })
 
         return res
