@@ -12,6 +12,14 @@ class SaleOrder(models.Model):
         # Iterate over the sale order lines
         for line in self.order_line:
             # Check if the training date is set
+            # Création d'un partenaire avec le nom de l'employé s'il n'a pas de partenaire associé
+            if not line.employee_id.user_id:
+                partner = self.env['res.partner'].create({
+                    'name': line.employee_id.name,
+                })
+            else:
+                partner = line.employee_id.user_id.partner_id
+
             if line.training_date:
                 # Create a new event in the calendar for the selected employee
                 self.env['calendar.event'].create({
@@ -19,7 +27,7 @@ class SaleOrder(models.Model):
                     'start_date': line.training_date,
                     'stop_date': line.training_date + timedelta(hours=8),
                     'allday': True,
-                    'partner_ids': [(4, line.employee_id.user_id.partner_id.id)],
+                    'partner_ids': [(4, partner.id)],
                 })
 
         return res
