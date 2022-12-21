@@ -6,6 +6,10 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
     def action_confirm(self):
+        current_user = self.env.user
+        print(current_user.name)  # prints the name of the current user
+        print(current_user.email)  # prints the email of the current user
+
         # Call the super method to confirm the sale order
         res = super(SaleOrder, self).action_confirm()
 
