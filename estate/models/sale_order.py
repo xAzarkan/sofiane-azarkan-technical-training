@@ -1,5 +1,6 @@
 from odoo import api, models, _, fields
 from odoo.exceptions import ValidationError
+from datetime import timedelta
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
