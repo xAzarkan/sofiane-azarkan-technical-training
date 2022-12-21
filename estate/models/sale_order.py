@@ -7,8 +7,7 @@ class SaleOrder(models.Model):
     
     def action_confirm(self):
         current_user = self.env.user
-        print(current_user.name)  # prints the name of the current user
-        print(current_user.email)  # prints the email of the current user
+        self.env.user.warning(title='Sale Order Confirmed', message=f'Sale order confirmed by {current_user.name}')
 
         # Call the super method to confirm the sale order
         res = super(SaleOrder, self).action_confirm()
