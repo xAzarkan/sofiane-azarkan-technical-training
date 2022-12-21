@@ -20,7 +20,7 @@ class SaleOrder(models.Model):
                     'stop_date': line.training_date + timedelta(hours=8),
                     'allday': True,
                     #'attendee_ids': [(6, 0, [line.employee_id.address_home_id.id])],
-                    'partner_ids': [(6, 0, [line.employee_id.address_home_id.id])], #changer cela pour récuperer l'employé selectionné
+                    'partner_ids': [(6, 0, [line.employee_id.id])], #changer cela pour récuperer l'employé selectionné
                 })
 
         return res
