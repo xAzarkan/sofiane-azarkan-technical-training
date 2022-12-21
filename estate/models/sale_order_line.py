@@ -17,9 +17,11 @@ class SaleOrderLine(models.Model):
             # Create a new event in the calendar
             event_vals = {
                 'name': self.name,
-                'start': self.date_order,
-                'stop': self.date_order + timedelta(hours=8),
-                'allday': False,
+                #'start': self.training_date,
+                #'stop': self.training_date + timedelta(hours=8),
+                'allday': True,
                 'resource_id': calendar.id,
             }
             event = self.env['calendar.event'].create(event_vals)
+
+            
