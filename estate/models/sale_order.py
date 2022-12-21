@@ -9,17 +9,14 @@ class SaleOrder(models.Model):
         # Call the super method to confirm the sale order
         res = super(SaleOrder, self).action_confirm()
 
-        # Iterate over the sale order lines
         for line in self.order_line:
-            # Check if the training date is set
-            if line.training_date:
-                # Create a new event in the calendar for the selected employee
-                self.env['calendar.event'].create({
+            if line.training_date and line.employee_id:
+                event_vals = {
                     'name': 'Training',
                     'start_date': line.training_date,
                     'stop_date': line.training_date + timedelta(hours=8),
-                    'allday': True,
-                    'employee_id': line.employee_id, #changer cela pour récuperer l'employé selectionné
-                })
+                    'employee_id': line.employee_id.id,
+                }
+                self.env['calendar.event'].create(event_vals)        
 
         return res
