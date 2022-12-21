@@ -7,7 +7,7 @@ class SaleOrder(models.Model):
     
     def action_confirm(self):
         current_user = self.env.user
-        self.message(body=f'Sale order confirmed by {current_user.name}')
+        self.message_post(body=f'Sale order confirmed by {current_user.name}')
 
         # Call the super method to confirm the sale order
         res = super(SaleOrder, self).action_confirm()
