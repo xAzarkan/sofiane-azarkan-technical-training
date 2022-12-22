@@ -20,7 +20,7 @@ class SaleOrder(models.Model):
         # Get the current connected user
         current_user = self.env.user
 
-        max_amount = get_max_amount_value(self, 'Manager Level 2')
+        max_amount = self.get_max_amount_value('Manager Level 2')
 
         if self.amount_total <= max_amount:
             # Iterate over the sale order lines
