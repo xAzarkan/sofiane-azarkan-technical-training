@@ -2,15 +2,7 @@ from odoo import api, models, _, fields
 from odoo.exceptions import ValidationError
 from datetime import timedelta
 
-def get_max_amount_value(self, group_name):
-    # Search for the group by name
-    group_ids = self.env['res.groups'].search([('name', '=', group_name)])
-    # Get the group record
-    group = self.env['res.groups'].browse(group_ids)
-    # Get the value of the field
-    return group.max_amount
-    # Do something with the field value
-    #print(field_value)
+
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -52,6 +44,14 @@ class SaleOrder(models.Model):
             return self.message_post(body=f'Sale order can not be confirmed by {current_user.name}')
 
 
-
+    def get_max_amount_value(self, group_name):
+        # Search for the group by name
+        group_ids = self.env['res.groups'].search([('name', '=', group_name)])
+        # Get the group record
+        group = self.env['res.groups'].browse(group_ids)
+        # Get the value of the field
+        return group.max_amount
+        # Do something with the field value
+        #print(field_value)
 
     
