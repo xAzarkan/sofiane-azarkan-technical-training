@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
         # Get the current connected user
         current_user = self.env.user
 
-        max_amount = self.get_max_amount_value('Manager Level 2')
+        max_amount = self.get_max_amount_value()
 
         if self.amount_total <= max_amount:
             # Iterate over the sale order lines
@@ -41,20 +41,22 @@ class SaleOrder(models.Model):
             return super(SaleOrder, self).action_confirm()
 
         else:
-            #return self.message_post(body=f'Sale order can not be confirmed by {current_user.name}')
-            raise Exception(f"Sale order can not be confirmed by {current_user.name}")
+            return self.message_post(body=f'Sale order can not be confirmed by {current_user.name}')
+            #raise Exception(f"Sale order can not be confirmed by {current_user.name}")
 
 
-    def get_max_amount_value(self, group_name):
+    def get_max_amount_value(self):
 
         current_user = self.env.user
         groups = current_user.groups_id
 
+        max_amount = 2000 # default max_amount
+
         for group in groups:
             if group.max_amount:
-                return group.max_amount
+                max_amount = group.max_amount
 
-        return 
+        return max_amount
 
         # # Search for the group by name
         # group_ids = self.env['res.groups'].search([('name', '=', group_name)])
