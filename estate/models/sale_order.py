@@ -75,7 +75,7 @@ class SaleOrder(models.Model):
             user_id = self.env.ref('base.user_root').id
 
         # Create an activity for a manager
-        self.env['activity.activity'].create({
+        self.env['mail.activity'].create({
             'res_model_id': self.env.ref('sale.model_sale_order').id,
             'res_id': self.id,
             'summary': _('Approval Requested'),
