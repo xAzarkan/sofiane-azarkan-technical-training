@@ -10,6 +10,11 @@
                     <field name="training_date"/>
                     <field name="employee_id" widget="many2one"/>
                 </xpath>
+
+                <!-- Add the button after the confirm button -->
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button string="Request Approval" type="object" name="request_approval"/>
+                </xpath>
             </field>
         </record>
     </data>
