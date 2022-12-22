@@ -11,28 +11,28 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         # Get the current connected user
         current_user = self.env.user
-
+        partner = self.partner_id
         max_amount = self.get_max_amount_value()
 
-        if self.amount_total <= max_amount:
+        # Verify max amount of the group AND max amount of the partner
+        if self.amount_total <= max_amount and self.amount_total <= partner.max_sale_order_amount or partner.max_sale_order_amount is None:
             # Iterate over the sale order lines
-            for line in self.order_line:
-                
+            for order in self.order_line:
                 # Création d'un partenaire avec le nom de l'employé s'il n'a pas de partenaire associé
-                if not line.employee_id.user_id:
+                if not order.employee_id.user_id:
                     partner = self.env['res.partner'].create({
-                        'name': line.employee_id.name,
+                        'name': order.employee_id.name,
                     })
                 else:
-                    partner = line.employee_id.user_id.partner_id
+                    partner = order.employee_id.user_id.partner_id
 
                 # Check if the training date is set
-                if line.training_date:
+                if order.training_date:
                     # Create a new event in the calendar for the selected employee
                     self.env['calendar.event'].create({
                         'name': 'Training for sale order',
-                        'start_date': line.training_date,
-                        'stop_date': line.training_date + timedelta(hours=8),
+                        'start_date': order.training_date,
+                        'stop_date': order.training_date + timedelta(hours=8),
                         'allday': True,
                         'partner_ids': [(4, partner.id)],
                     })
@@ -50,32 +50,12 @@ class SaleOrder(models.Model):
         current_user = self.env.user
         groups = current_user.groups_id
 
-        max_amount = 2000 # default max_amount
+        max_amount = 500 # default max_amount
 
         for group in groups:
             if group.max_amount:
                 max_amount = group.max_amount
 
         return max_amount
-
-        # # Search for the group by name
-        # group_ids = self.env['res.groups'].search([('name', '=', group_name)])
-        # # Get the group record
-        # group = self.env['res.groups'].browse(group_ids)
-        # # Get the value of the field
-        # return group.max_amount
-        # # Do something with the field value
-        # #print(field_value)
-
-        # # Récupération des groupes de l'utilisateur
-        # groups = user.groups_id
-
-        # # Initialisation du niveau de gestionnaire de l'utilisateur à 0
-        # user_level = 0
-
-        # # Vérification du niveau de gestionnaire de l'utilisateur
-        # for group in groups:
-        #     if group.max_amount:
-        #         user_level = max(user_level, group.max_amount)
 
     
