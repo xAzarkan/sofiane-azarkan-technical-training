@@ -45,13 +45,34 @@ class SaleOrder(models.Model):
 
 
     def get_max_amount_value(self, group_name):
-        # Search for the group by name
-        group_ids = self.env['res.groups'].search([('name', '=', group_name)])
-        # Get the group record
-        group = self.env['res.groups'].browse(group_ids)
-        # Get the value of the field
-        return group.max_amount
-        # Do something with the field value
-        #print(field_value)
+
+        current_user = self.env.user
+        groups = current_user.groups_id
+
+        for group in groups:
+            if group.max_amount:
+                return group.max_amount
+
+        return 
+
+        # # Search for the group by name
+        # group_ids = self.env['res.groups'].search([('name', '=', group_name)])
+        # # Get the group record
+        # group = self.env['res.groups'].browse(group_ids)
+        # # Get the value of the field
+        # return group.max_amount
+        # # Do something with the field value
+        # #print(field_value)
+
+        # # Récupération des groupes de l'utilisateur
+        # groups = user.groups_id
+
+        # # Initialisation du niveau de gestionnaire de l'utilisateur à 0
+        # user_level = 0
+
+        # # Vérification du niveau de gestionnaire de l'utilisateur
+        # for group in groups:
+        #     if group.max_amount:
+        #         user_level = max(user_level, group.max_amount)
 
     
