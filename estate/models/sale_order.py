@@ -42,7 +42,7 @@ class SaleOrder(models.Model):
 
         else:
             #return self.message_post(body=f'Sale order can not be confirmed by {current_user.name}')
-            raise ValueError(f"Sale order can not be confirmed by {current_user.name}")
+            raise TimeoutError(f"Sale order can not be confirmed by {current_user.name}")
 
 
     def get_max_amount_value(self, group_name):
