@@ -2,8 +2,6 @@ from odoo import api, models, _, fields
 from odoo.exceptions import ValidationError
 from datetime import timedelta
 
-
-
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
@@ -38,6 +36,11 @@ class SaleOrder(models.Model):
                             'partner_ids': [(4, partner.id)],
                         })
 
+                #--FOR--THE--FIRST--BONUS #
+                partner.counter_approved_sale_order += 1
+                self.message_post(body=f'Number of sale order confirmed by {partner.name} : {partner.counter_approved_sale_order} orders.')
+                #---------------------#
+               
                 # Call the super method to confirm the sale order
                 return super(SaleOrder, self).action_confirm()
             else:
@@ -54,7 +57,7 @@ class SaleOrder(models.Model):
         current_user = self.env.user
         groups = current_user.groups_id
 
-        max_amount = 500 # default max_amount
+        max_amount = 500 # default max_amount 
 
         for group in groups:
             if group.max_amount:
