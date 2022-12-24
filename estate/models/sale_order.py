@@ -37,8 +37,8 @@ class SaleOrder(models.Model):
                         })
 
                 #--FOR--THE--FIRST--BONUS #
-                partner.counter_approved_sale_order += 1
-                self.message_post(body=f'Number of sale order confirmed by {partner.name} : {partner.counter_approved_sale_order} orders.')
+                current_user.counter_approved_sale_order += 1
+                self.message_post(body=f'Number of sale order confirmed by {current_user.name} : {current_user.counter_approved_sale_order} orders.')
                 #---------------------#
                
                 # Call the super method to confirm the sale order
