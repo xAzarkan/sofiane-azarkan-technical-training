@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_training_wizard" model="ir.actions.act_window">
+        <field name="name">Training Wizard</field>
+        <field name="res_model">training.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_training_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

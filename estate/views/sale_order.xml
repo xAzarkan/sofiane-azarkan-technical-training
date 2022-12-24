@@ -14,8 +14,10 @@
                 <!-- Add the button after the confirm button -->
                 <xpath expr="//button[@name='action_confirm']" position="after">
                     <button string="Request Approval" type="object" name="request_approval"/>
+                    <button string="Select the training date" type="object" name="action_training_wizard"/>
                 </xpath>
             </field>
         </record>
     </data>
 </odoo>
+

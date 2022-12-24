@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_training_wizard_form" model="ir.ui.view">
+        <field name="name">Training Wizard Form</field>
+        <field name="model">training.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Training Wizard">
+                <field name="training_date"/>
+            </form>
+        </field>
+    </record>
+</odoo>
